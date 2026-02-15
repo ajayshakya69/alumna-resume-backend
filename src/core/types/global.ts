@@ -1,0 +1,34 @@
+export interface User {
+  id: string;
+  sub: string;
+  name: string;
+  given_name: string;
+  family_name: string;
+  middle_name: string;
+  nickname: string;
+  preferred_username: string;
+  profile: string;
+  picture: string;
+  website: string;
+  email: string;
+  password: string;
+  gender: string;
+  birthdate: string;
+  zoneinfo: string;
+  locale: string;
+  phone_number: string;
+  address: any;
+  email_verified: boolean;
+  password_changed_at?: Date;
+  meta_data?: Record<string, unknown>;
+  is_completed: boolean;
+  is_consented: boolean;
+  is_deleted: boolean;
+  completed_at: Date;
+  deleted_at: Date;
+  is_banned: boolean;
+  banned_at: Date | null;
+  ban_reason: string | null;
+  created_at?: Date;
+  updated_at?: Date;
+}

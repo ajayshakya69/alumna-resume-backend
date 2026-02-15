@@ -7,7 +7,7 @@ import { ReqResInterceptor } from 'src/core/interceptors/response-interceptor';
 
 import { LoggerModule } from 'src/core/services/logger/logger.module';
 import { HttpExceptionFilter } from 'src/core/filters/http-exception.filter';
-import { ResumeModel } from 'src/modules/resume/resume.schema';
+import { ResumeModule } from 'src/modules/resume/resume.module';
 
 @Module({
   imports: [
@@ -18,7 +18,7 @@ import { ResumeModel } from 'src/modules/resume/resume.schema';
     LoggerModule,
     HealthCheckModule,
     // modules
-    ResumeModel,
+    ResumeModule,
   ],
   providers: [
     {

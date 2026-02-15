@@ -1,102 +1,173 @@
-// dev-profile.dto.ts
 import {
   IsUUID,
   IsOptional,
   IsString,
-  IsNumber,
-  IsDate,
-  IsEmail,
-  IsEnum,
+  IsBoolean,
+  IsArray,
+  IsObject,
+  ValidateNested,
 } from 'class-validator';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { USER_ROLE } from 'src/core/constants/user.constants';
+import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import {
+  ResumeAdditionalSections,
+  ResumeCertifications,
+  ResumeEducation,
+  ResumeExperience,
+  ResumeHobbies,
+  ResumePersonalInfo,
+  ResumeProfessionalSummary,
+  ResumeSkills,
+} from './types';
 
-export class CreateUserDto {
-  @ApiProperty({ example: 'john.doe@example.com' })
-  @IsEmail()
-  email: string;
+export class CreateResumeDto {
+  /* -------------------------------------------------------------------------- */
+  /*                                Personal Info                               */
+  /* -------------------------------------------------------------------------- */
 
-  @ApiProperty({
-    example: 'a7b5c92e-9a44-4b6c-8f83-1234567890ab',
-    description: 'Supabase auth user ID',
+  @ApiPropertyOptional({
+    example: {
+      is_visible: true,
+      data: {
+        full_name: 'John Doe',
+        email_address: 'john@email.com',
+        phone_number: '+1 999 999 9999',
+      },
+    },
   })
-  @IsUUID()
-  supabase_id: string;
-
-  @ApiPropertyOptional({ example: 'John Doe' })
   @IsOptional()
-  @IsString()
-  name?: string;
+  @IsObject()
+  personal_info?: ResumePersonalInfo;
 
-  @ApiPropertyOptional({ example: 'https://cdn.example.com/avatar.png' })
-  @IsOptional()
-  @IsString()
-  profile_picture?: string;
+  /* -------------------------------------------------------------------------- */
+  /*                         Professional Summary                               */
+  /* -------------------------------------------------------------------------- */
 
-  @ApiPropertyOptional({ enum: USER_ROLE, example: USER_ROLE.AUTHENTICATED })
-  @IsOptional()
-  @IsEnum(USER_ROLE)
-  role?: USER_ROLE;
-}
-
-export class UpdateUserDto {
-  @ApiPropertyOptional({ example: 'John Doe' })
-  @IsOptional()
-  @IsString()
-  name?: string;
-
-  @ApiPropertyOptional({ example: 'https://cdn.example.com/avatar.png' })
-  @IsOptional()
-  @IsString()
-  profile_picture?: string;
-
-  @ApiPropertyOptional({ enum: USER_ROLE, example: USER_ROLE.DEVELOPER })
-  @IsOptional()
-  @IsEnum(USER_ROLE)
-  role?: USER_ROLE;
-}
-
-export class IdDto {
-  @ApiProperty({ example: 'a7b5c92e-9a44-4b6c-8f83-1234567890ab' })
-  @IsUUID()
-  id: string;
-}
-
-export class UserIdDto {
-  @ApiProperty({ example: 'a7b5c92e-9a44-4b6c-8f83-1234567890ab' })
-  @IsUUID()
-  user_id: string;
-}
-
-export class OrgIdDto {
-  @ApiProperty({ example: 'a7b5c92e-9a44-4b6c-8f83-1234567890ab' })
-  @IsUUID()
-  org_id: string;
-}
-
-export class EmailDto {
-  @ApiProperty({ example: 'user@example.com' })
-  @IsEmail()
-  email: string;
-}
-
-export class SupabaseIdDto {
-  @ApiProperty({ example: 'a7b5c92e-9a44-4b6c-8f83-1234567890ab' })
-  @IsUUID()
-  supabase_id: string;
-}
-
-export class CreateClassDto {
-  @ApiProperty({
-    description: 'Title of the class',
-    example: 'Mathematics 101',
+  @ApiPropertyOptional({
+    example: {
+      is_visible: true,
+      summary_text: 'Senior Backend Engineer...',
+    },
   })
-  title: string;
+  @IsOptional()
+  @IsObject()
+  professional_summary?: ResumeProfessionalSummary;
 
-  @ApiProperty({
-    description: 'Optional description of the class',
-    example: 'This class covers basic algebra and geometry concepts.',
-    required: false,
+  /* -------------------------------------------------------------------------- */
+  /*                                Experience                                  */
+  /* -------------------------------------------------------------------------- */
+
+  @ApiPropertyOptional({
+    example: {
+      is_visible: true,
+      jobs: [
+        {
+          company_name: 'Google',
+          position: 'Software Engineer',
+          start_month: 'Jan',
+          start_year: '2020',
+          is_current: true,
+        },
+      ],
+      internships: [],
+    },
   })
-  description?: string;
+  @IsOptional()
+  @IsObject()
+  experience?: ResumeExperience;
+
+  /* -------------------------------------------------------------------------- */
+  /*                              Certifications                                */
+  /* -------------------------------------------------------------------------- */
+
+  @ApiPropertyOptional({
+    example: {
+      is_visible: true,
+      items: [
+        {
+          certification_name: 'AWS Certified Developer',
+          issuing_organization: 'Amazon',
+        },
+      ],
+    },
+  })
+  @IsOptional()
+  @IsObject()
+  certifications?: ResumeCertifications;
+
+  /* -------------------------------------------------------------------------- */
+  /*                                Education                                   */
+  /* -------------------------------------------------------------------------- */
+
+  @ApiPropertyOptional({
+    example: {
+      is_visible: true,
+      items: [
+        {
+          school_university: 'MIT',
+          degree: 'BSc Computer Science',
+        },
+      ],
+    },
+  })
+  @IsOptional()
+  @IsObject()
+  education?: ResumeEducation;
+  /* -------------------------------------------------------------------------- */
+  /*                                  Skills                                    */
+  /* -------------------------------------------------------------------------- */
+
+  @ApiPropertyOptional({
+    example: {
+      is_visible: true,
+      categories: [
+        {
+          category_name: 'Backend',
+          skills: [{ skill_name: 'Node.js' }],
+        },
+      ],
+    },
+  })
+  @IsOptional()
+  @IsObject()
+  skills?: ResumeSkills;
+
+  /* -------------------------------------------------------------------------- */
+  /*                                  Hobbies                                   */
+  /* -------------------------------------------------------------------------- */
+
+  @ApiPropertyOptional({
+    example: {
+      is_visible: true,
+      hobbies_and_interests: 'Reading, Cycling',
+    },
+  })
+  @IsOptional()
+  @IsObject()
+  hobbies?: ResumeHobbies;
+
+  /* -------------------------------------------------------------------------- */
+  /*                            Additional Sections                             */
+  /* -------------------------------------------------------------------------- */
+
+  @ApiPropertyOptional({
+    example: {
+      is_visible: true,
+      projects: [],
+      languages: [],
+      custom_sections: {},
+    },
+  })
+  @IsOptional()
+  @IsObject()
+  additional_sections?: ResumeAdditionalSections;
+
+  @ApiPropertyOptional({
+    example: { template: 'modern-dark' },
+  })
+  @IsOptional()
+  @IsObject()
+  meta_data?: Record<string, unknown>;
 }
+
+export class UpdateResumeDto extends PartialType(CreateResumeDto) {}
