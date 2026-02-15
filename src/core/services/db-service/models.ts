@@ -1,9 +1,7 @@
-import { ClassSchema, UserModel } from 'src/modules/users/users.schema';
+import { ResumeModel } from 'src/modules/resume/resume.schema';
 
-export const MONGOOSE_MODELS = {
-  Class: ClassSchema,
-};
+export const MONGOOSE_MODELS = {};
 
 export const SQL_MODELS = {
-  UserModel: UserModel.setup,
+  ResumeModel: ResumeModel.setup,
 };

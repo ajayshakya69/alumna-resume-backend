@@ -18,15 +18,15 @@ export class CustomHealthService extends HealthIndicator {
     return this.getStatus('Postgres', true);
   };
 
-  checkMongoConnection = async () => {
-    const mongoConnected = await this.dbService
-      .getMongoConnection()
-      .isConnected();
-    if (!mongoConnected)
-      throw new HealthCheckError(
-        'MongoDB services are not ready',
-        this.getStatus('MongoDB', false),
-      );
-    return this.getStatus('MongoDB', true);
-  };
+  // checkMongoConnection = async () => {
+  //   const mongoConnected = await this.dbService
+  //     .getMongoConnection()
+  //     .isConnected();
+  //   if (!mongoConnected)
+  //     throw new HealthCheckError(
+  //       'MongoDB services are not ready',
+  //       this.getStatus('MongoDB', false),
+  //     );
+  //   return this.getStatus('MongoDB', true);
+  // };
 }
