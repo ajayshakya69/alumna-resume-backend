@@ -31,36 +31,35 @@ export class ResumeController {
 
   @Post()
   @UseGuards(SSOAuthGuard)
-  @ApiOperation({ summary: 'Create a new resume' })
-  @ApiResponse({ status: 201, description: 'Resume created successfully' })
+  @ApiOperation({ summary: 'Create resume' })
   create(@Body() createResumeDto: CreateResumeDto, @Req() req: RequestDto) {
-    return this.resumeService.create(req?.user?.id, createResumeDto);
+    return this.resumeService.create(req.user.id, createResumeDto);
   }
 
   @Get()
   @UseGuards(SSOAuthGuard)
-  @ApiOperation({ summary: 'List all resumes' })
-  findAll(@Req() req: RequestDto) {
-    return this.resumeService.findAll(req?.user?.id);
+  @ApiOperation({ summary: 'Get my resume' })
+  findMyResume(@Req() req: RequestDto) {
+    return this.resumeService.findMyResume(req.user.id);
   }
 
   @Get('details')
-  @ApiOperation({ summary: 'Get resume by ID' })
-  findOne(@Query('id') id: string) {
-    return this.resumeService.findOne(id);
+  @ApiOperation({ summary: 'Get resume details' })
+  getResumeWithId(@Query('id') id: string) {
+    return this.resumeService.findById(id);
   }
 
   @Patch()
   @UseGuards(SSOAuthGuard)
-  @ApiOperation({ summary: 'Update resume by ID' })
-  update(@Query('id') id: string, @Body() updateResumeDto: UpdateResumeDto) {
-    return this.resumeService.update(id, updateResumeDto);
+  @ApiOperation({ summary: 'Update my resume' })
+  update(@Body() updateResumeDto: UpdateResumeDto, @Req() req: RequestDto) {
+    return this.resumeService.update(req.user.id, updateResumeDto);
   }
 
   @Delete()
   @UseGuards(SSOAuthGuard)
-  @ApiOperation({ summary: 'Delete resume by ID' })
-  delete(@Query('id') id: string) {
-    return this.resumeService.delete(id);
+  @ApiOperation({ summary: 'Delete my resume' })
+  delete(@Req() req: RequestDto) {
+    return this.resumeService.delete(req.user.id);
   }
 }

@@ -44,7 +44,7 @@ export class SSOAuthGuard implements CanActivate {
 
     try {
       const response = await axios.get(
-        `${process.env.SSO_URL}/oauth2/userinfo`, // e.g. https://sso.example.com/oauth/userinfo
+        `${process.env.SSO_URL}/oauth2/userinfo`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

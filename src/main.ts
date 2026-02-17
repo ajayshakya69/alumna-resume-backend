@@ -15,6 +15,10 @@ async function bootstrap() {
     credentials: true,
   });
   app.setGlobalPrefix('db');
+  app.enableCors({
+    origin: true,
+    credentials: true,
+  });
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
