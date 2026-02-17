@@ -25,6 +25,7 @@ export class ResumeModel extends Model<
 > {
   declare id: CreationOptional<string>;
   declare user_id: CreationOptional<string>;
+  declare selectedTemplate: CreationOptional<string>;
   declare resume_link: CreationOptional<string>;
   declare personal_info: CreationOptional<ResumePersonalInfo>;
   declare professional_summary: CreationOptional<ResumeProfessionalSummary>;
@@ -52,9 +53,14 @@ export class ResumeModel extends Model<
         user_id: {
           type: DataTypes.UUID,
           allowNull: false,
+          unique: true,
         },
 
         resume_link: {
+          type: DataTypes.TEXT,
+          allowNull: true,
+        },
+        selectedTemplate: {
           type: DataTypes.TEXT,
           allowNull: true,
         },
