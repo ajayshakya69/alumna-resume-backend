@@ -10,6 +10,10 @@ async function bootstrap() {
   const port = process.env.PORT ?? 3000;
   const app = await NestFactory.create(AppModule);
   const loggerService = app.get(LoggerService);
+  app.enableCors({
+    origin: true,
+    credentials: true,
+  });
   app.setGlobalPrefix('db');
   app.useGlobalPipes(
     new ValidationPipe({
