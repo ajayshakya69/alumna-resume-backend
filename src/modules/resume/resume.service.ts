@@ -15,11 +15,11 @@ export class ResumeService {
     const existing = await this.ResumeModel.findOne({ where: { user_id } });
 
     if (existing) {
-      await existing.update(data);
+      await existing.update({ ...data, id: undefined, user_id: undefined });
       return existing;
     }
 
-    return this.ResumeModel.create({ user_id, ...data });
+    return this.ResumeModel.create({ ...data, id: undefined, user_id });
   }
 
   async findById(id: string) {
@@ -55,7 +55,7 @@ export class ResumeService {
       throw new NotFoundException('Resume not found');
     }
 
-    await resume.update(updateDto);
+    await resume.update({ ...updateDto, id: undefined, user_id });
 
     return resume;
   }
