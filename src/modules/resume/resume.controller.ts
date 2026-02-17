@@ -53,7 +53,8 @@ export class ResumeController {
   @UseGuards(SSOAuthGuard)
   @ApiOperation({ summary: 'Update my resume' })
   update(@Body() updateResumeDto: UpdateResumeDto, @Req() req: RequestDto) {
-    return this.resumeService.update(req.user.id, updateResumeDto);
+    // return this.resumeService.update(req.user.id, updateResumeDto);
+    return this.resumeService.create(req.user.id, updateResumeDto);
   }
 
   @Delete()
