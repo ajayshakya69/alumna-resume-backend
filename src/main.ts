@@ -10,6 +10,10 @@ async function bootstrap() {
   const port = process.env.PORT ?? 3000;
   const app = await NestFactory.create(AppModule);
   const loggerService = app.get(LoggerService);
+  app.enableCors({
+    origin: true,
+    credentials: true,
+  });
   app.setGlobalPrefix('db');
   app.useGlobalPipes(
     new ValidationPipe({
@@ -22,6 +26,7 @@ async function bootstrap() {
     .setTitle('Db service')
     .setDescription('The API description')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, documentFactory);

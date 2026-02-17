@@ -24,33 +24,19 @@ export class ResumeModel extends Model<
   InferCreationAttributes<ResumeModel>
 > {
   declare id: CreationOptional<string>;
-
   declare user_id: CreationOptional<string>;
-
   declare resume_link: CreationOptional<string>;
-
   declare personal_info: CreationOptional<ResumePersonalInfo>;
-
   declare professional_summary: CreationOptional<ResumeProfessionalSummary>;
-
   declare experience: CreationOptional<ResumeExperience>;
-
   declare certifications: CreationOptional<ResumeCertifications>;
-
   declare education: CreationOptional<ResumeEducation>;
-
   declare skills: CreationOptional<ResumeSkills>;
-
   declare websites_social_links: CreationOptional<ResumeSocialLinks>;
-
   declare hobbies: CreationOptional<ResumeHobbies>;
-
   declare additional_sections: CreationOptional<ResumeAdditionalSections>;
-
   declare meta_data: CreationOptional<Record<string, unknown>>;
-
   declare readonly created_at: CreationOptional<Date>;
-
   declare readonly updated_at: CreationOptional<Date>;
 
   static setup(sequelize: Sequelize) {
