@@ -8,6 +8,7 @@ import { ReqResInterceptor } from 'src/core/interceptors/response-interceptor';
 import { LoggerModule } from 'src/core/services/logger/logger.module';
 import { HttpExceptionFilter } from 'src/core/filters/http-exception.filter';
 import { ResumeModule } from 'src/modules/resume/resume.module';
+import { UploadModule } from 'src/modules/upload/upload.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { ResumeModule } from 'src/modules/resume/resume.module';
     HealthCheckModule,
     // modules
     ResumeModule,
+    UploadModule
   ],
   providers: [
     {
